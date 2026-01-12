@@ -1,0 +1,1 @@
+User registration feature implementation fot WMS-1
