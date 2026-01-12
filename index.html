@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waste Management Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Waste Management Dashboard</h1>
+    <p>WMS-14-FR14 – Track Your Personal Environmental Impact</p>
+</header>
+
+<div class="container">
+
+    <div class="cards">
+        <div class="card">
+            <h3>Total Waste Generated</h3>
+            <p id="totalWaste">0 kg</p>
+        </div>
+        <div class="card">
+            <h3>Recycled Waste</h3>
+            <p id="recycledWaste">0 kg</p>
+        </div>
+        <div class="card">
+            <h3>Non-Recyclable Waste</h3>
+            <p id="nonRecycledWaste">0 kg</p>
+        </div>
+        <div class="card">
+            <h3>CO₂ Reduction</h3>
+            <p id="co2Reduction">0 kg</p>
+        </div>
+    </div>
+
+    <h2>Monthly Waste Tracking</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Total (kg)</th>
+                <th>Recycled (kg)</th>
+                <th>Non-Recycled (kg)</th>
+            </tr>
+        </thead>
+        <tbody id="wasteTable">
+            <!-- JS will insert rows -->
+        </tbody>
+    </table>
+
+</div>
+
+<footer>
+    © 2026 Waste Management System
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
