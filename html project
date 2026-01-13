@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoSave - Waste Management System</title>
+    <title>EcoSave Pro | Integrated Waste Management</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
+        /* --- التصميم المطور (CSS) --- */
         :root {
-            --primary-green: #2d6a4f;
-            --light-green: #95d5b2;
-            --accent-green: #40916c;
+            --primary: #1b4332;
+            --secondary: #40916c;
+            --accent: #d8f3dc;
             --white: #ffffff;
-            --bg-gray: #f8f9fa;
+            --shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-gray);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #d8f3dc 0%, #95d5b2 100%);
             margin: 0;
             display: flex;
             justify-content: center;
@@ -23,140 +29,221 @@
             min-height: 100vh;
         }
 
-        .container {
-            background: var(--white);
-            width: 400px;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
         }
 
-        h2 { color: var(--primary-green); margin-bottom: 20px; }
-        
-        .section { display: none; animation: fadeIn 0.5s; }
-        .active { display: block; }
+        .app-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        h1 { font-weight: 600; color: var(--primary); margin: 0; font-size: 1.8rem; }
+        h1 span { color: var(--secondary); }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .subtitle { color: #636e72; font-size: 0.85rem; margin-bottom: 20px; }
+
+        .section { display: none; }
+        .active { display: block; animation: slideUp 0.4s ease-out; }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+        }
 
         input {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            padding: 12px 12px 12px 42px;
+            border: 2px solid #edf2ef;
+            border-radius: 12px;
             box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
         }
+
+        input:focus { border-color: var(--secondary); background: #f7fffb; }
+
+        .input-row { display: flex; gap: 8px; }
 
         button {
             width: 100%;
             padding: 12px;
-            background-color: var(--primary-green);
-            color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
             transition: 0.3s;
+            margin-top: 10px;
         }
 
-        button:hover { background-color: var(--accent-green); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-add { background: var(--secondary); color: white; }
+        .btn-secondary { background: #e8f5e9; color: var(--primary); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
 
-        .dashboard-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 20px;
-        }
+        button:hover { transform: translateY(-2px); opacity: 0.9; }
 
-        .stat-card {
-            background: var(--light-green);
-            padding: 15px;
-            border-radius: 10px;
-            color: var(--primary-green);
-            font-weight: bold;
-        }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+        .stat-box { background: var(--white); padding: 15px; border-radius: 15px; border: 1px solid var(--accent); }
+        .stat-label { display: block; font-size: 0.75rem; color: #636e72; }
+        .stat-value { font-size: 1.3rem; font-weight: 600; color: var(--primary); }
 
-        ul { text-align: left; padding: 0; list-style: none; }
+        .list-container { margin-top: 20px; text-align: left; max-height: 120px; overflow-y: auto; }
+        ul { padding: 0; list-style: none; }
         li { 
-            background: #e9ecef; 
-            padding: 8px; 
+            background: #f8f9fa; 
+            padding: 10px; 
             margin-top: 5px; 
-            border-radius: 5px; 
-            font-size: 14px;
-            border-left: 4px solid var(--primary-green);
+            border-radius: 10px; 
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        .achievement { background: #fff9db; padding: 12px; border-radius: 12px; color: #856404; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="app-container">
+    <header class="app-header">
+        <i class="fas fa-leaf logo-icon"></i>
+        <h1>EcoSave <span>Pro</span></h1>
+    </header>
+
     <div id="registrationSec" class="section active">
-        <h2>Register</h2>
-        <p>Join our eco-community today!</p>
-        <input type="text" id="regName" placeholder="Full Name">
-        <input type="email" id="regEmail" placeholder="Email Address">
-        <button onclick="showSection('loginSec')">Create Account</button>
+        <div class="card">
+            <h2>Create Account</h2>
+            <p class="subtitle">Join our green community</p>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="regName" placeholder="Full Name">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="regEmail" placeholder="Email Address">
+            </div>
+            <button class="btn-primary" onclick="showSection('loginSec')">Sign Up</button>
+        </div>
     </div>
 
     <div id="loginSec" class="section">
-        <h2>Login </h2>
-        <input type="text" id="logUser" placeholder="Username">
-        <input type="password" id="logPass" placeholder="Password">
-        <button onclick="showSection('recordSec')">Login</button>
+        <div class="card">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Secure Login</p>
+            <div class="input-group">
+                <i class="fas fa-id-badge"></i>
+                <input type="text" placeholder="Username">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Password">
+            </div>
+            <button class="btn-primary" onclick="showSection('recordSec')">Login</button>
+        </div>
     </div>
 
     <div id="recordSec" class="section">
-        <h2>Record Waste </h2>
-        <input type="text" id="wasteType" placeholder="Waste Type (e.g., Paper)">
-        <input type="number" id="wasteQty" placeholder="Weight (kg)">
-        <button onclick="addWaste()">Save Entry</button>
-        <ul id="wasteList"></ul>
-        <button style="background:#40916c" onclick="showSection('dashboardSec')">View Dashboard</button>
+        <div class="card">
+            <h2>Record Waste</h2>
+            <div class="input-row">
+                <div class="input-group" style="flex:2">
+                    <i class="fas fa-recycle"></i>
+                    <input type="text" id="wasteType" placeholder="Type">
+                </div>
+                <div class="input-group" style="flex:1">
+                    <i class="fas fa-weight-hanging"></i>
+                    <input type="number" id="wasteQty" placeholder="kg">
+                </div>
+            </div>
+            <button class="btn-add" onclick="addWaste()">Add Entry</button>
+            <div class="list-container">
+                <ul id="wasteList"></ul>
+            </div>
+            <button class="btn-secondary" onclick="showSection('dashboardSec')">View Dashboard</button>
+        </div>
     </div>
 
     <div id="dashboardSec" class="section">
-        <h2>My Impact </h2>
-        <div class="dashboard-stats">
-            <div class="stat-card">Total Waste<br><span id="totalKg">0</span> kg</div>
-            <div class="stat-card">Eco Score<br><span>A+</span></div>
+        <div class="card">
+            <h2>Your Impact</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-label">Total Waste</span>
+                    <span class="stat-value"><span id="totalKg">0</span> kg</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Eco Score</span>
+                    <span class="stat-value" style="color:#2ecc71">A+</span>
+                </div>
+            </div>
+            <div class="achievement">
+                <i class="fas fa-trophy"></i>
+                <p>You saved <strong>3 trees</strong> this month!</p>
+            </div>
+            <button class="btn-outline" onclick="showSection('recordSec')">New Record</button>
         </div>
-        <p style="color: #666; font-size: 14px; margin-top: 20px;">You saved 3 trees this month!</p>
-        <button onclick="showSection('recordSec')">Back to Recording</button>
     </div>
 </div>
 
 <script>
-    function showSection(sectionId) {
-        document.querySelectorAll('.section').forEach(sec => {
-            sec.classList.remove('active');
-        });
-        document.getElementById(sectionId).classList.add('active');
-    }
-
+    /* --- البرمجة (JavaScript) --- */
     let totalWaste = 0;
 
+    function showSection(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
     function addWaste() {
-        const type = document.getElementById('wasteType').value;
-        const qty = document.getElementById('wasteQty').value;
+        const typeInput = document.getElementById('wasteType');
+        const qtyInput = document.getElementById('wasteQty');
         const list = document.getElementById('wasteList');
 
-        if (type && qty) {
+        if (typeInput.value && qtyInput.value) {
             const li = document.createElement('li');
-            li.textContent = `🌱 ${type}: ${qty} kg`;
-            list.appendChild(li);
+            li.innerHTML = `<span>${typeInput.value}</span> <strong>${qtyInput.value} kg</strong>`;
+            list.prepend(li);
 
-            totalWaste += parseFloat(qty);
-            document.getElementById('totalKg').innerText = totalWaste;
+            totalWaste += parseFloat(qtyInput.value);
+            document.getElementById('totalKg').innerText = totalWaste.toFixed(1);
 
-            document.getElementById('wasteType').value = "";
-            document.getElementById('wasteQty').value = "";
+            typeInput.value = "";
+            qtyInput.value = "";
         } else {
-            alert("Please fill all fields!");
+            alert("Please fill all fields");
         }
     }
 </script>
