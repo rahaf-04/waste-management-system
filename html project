@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSave - Waste Management System</title>
+    <style>
+        :root {
+            --primary-green: #2d6a4f;
+            --light-green: #95d5b2;
+            --accent-green: #40916c;
+            --white: #ffffff;
+            --bg-gray: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-gray);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--white);
+            width: 400px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h2 { color: var(--primary-green); margin-bottom: 20px; }
+        
+        .section { display: none; animation: fadeIn 0.5s; }
+        .active { display: block; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover { background-color: var(--accent-green); }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: var(--light-green);
+            padding: 15px;
+            border-radius: 10px;
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+
+        ul { text-align: left; padding: 0; list-style: none; }
+        li { 
+            background: #e9ecef; 
+            padding: 8px; 
+            margin-top: 5px; 
+            border-radius: 5px; 
+            font-size: 14px;
+            border-left: 4px solid var(--primary-green);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="registrationSec" class="section active">
+        <h2>Register</h2>
+        <p>Join our eco-community today!</p>
+        <input type="text" id="regName" placeholder="Full Name">
+        <input type="email" id="regEmail" placeholder="Email Address">
+        <button onclick="showSection('loginSec')">Create Account</button>
+    </div>
+
+    <div id="loginSec" class="section">
+        <h2>Login </h2>
+        <input type="text" id="logUser" placeholder="Username">
+        <input type="password" id="logPass" placeholder="Password">
+        <button onclick="showSection('recordSec')">Login</button>
+    </div>
+
+    <div id="recordSec" class="section">
+        <h2>Record Waste </h2>
+        <input type="text" id="wasteType" placeholder="Waste Type (e.g., Paper)">
+        <input type="number" id="wasteQty" placeholder="Weight (kg)">
+        <button onclick="addWaste()">Save Entry</button>
+        <ul id="wasteList"></ul>
+        <button style="background:#40916c" onclick="showSection('dashboardSec')">View Dashboard</button>
+    </div>
+
+    <div id="dashboardSec" class="section">
+        <h2>My Impact </h2>
+        <div class="dashboard-stats">
+            <div class="stat-card">Total Waste<br><span id="totalKg">0</span> kg</div>
+            <div class="stat-card">Eco Score<br><span>A+</span></div>
+        </div>
+        <p style="color: #666; font-size: 14px; margin-top: 20px;">You saved 3 trees this month!</p>
+        <button onclick="showSection('recordSec')">Back to Recording</button>
+    </div>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(sec => {
+            sec.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    let totalWaste = 0;
+
+    function addWaste() {
+        const type = document.getElementById('wasteType').value;
+        const qty = document.getElementById('wasteQty').value;
+        const list = document.getElementById('wasteList');
+
+        if (type && qty) {
+            const li = document.createElement('li');
+            li.textContent = `🌱 ${type}: ${qty} kg`;
+            list.appendChild(li);
+
+            totalWaste += parseFloat(qty);
+            document.getElementById('totalKg').innerText = totalWaste;
+
+            document.getElementById('wasteType').value = "";
+            document.getElementById('wasteQty').value = "";
+        } else {
+            alert("Please fill all fields!");
+        }
+    }
+</script>
+
+</body>
+</html>
